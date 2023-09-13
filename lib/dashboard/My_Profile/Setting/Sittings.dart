@@ -6,10 +6,14 @@ import 'package:playerconnect/dashboard/My_Profile/Setting/Contact_Support.dart'
 import 'package:playerconnect/dashboard/My_Profile/Setting/Delete_Account.dart';
 import 'package:playerconnect/dashboard/My_Profile/Setting/Edit_Profile/Edit_Profile.dart';
 import 'package:playerconnect/dashboard/My_Profile/Setting/Notifications.dart';
+import 'package:playerconnect/provider_data/delete_user_account.dart';
+import 'package:playerconnect/provider_data/provider_setting.dart';
+import 'package:playerconnect/shared/SharedPreferences.dart';
 import 'package:playerconnect/shared/constant/appColors.dart';
 import 'package:playerconnect/shared/constant/font_sizes.dart';
 import 'package:playerconnect/shared/dialog_boxes/privacy_policy_dialog_box.dart';
 import 'package:playerconnect/shared/dialog_boxes/terms_condition_dialog_box.dart';
+import 'package:provider/provider.dart';
 
 class Sittings extends StatefulWidget {
   const Sittings({Key? key}) : super(key: key);
@@ -21,120 +25,123 @@ class Sittings extends StatefulWidget {
 class _SittingsState extends State<Sittings> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Setting',
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: AppColor.blue),
-          )),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(children: [
-          Card(
-            child: ListTile(
-                trailing: TextButton(
-                    onPressed: () {},
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Edit_Profile(),
-                            ));
-                      },
-                      child: Text(
-                        'EDIT',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.skyBlue),
-                      ),
+    return Consumer<ProviderSetting>(builder: (context, provider, child) {
+      return  Scaffold(
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Setting',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.blue),
+            )),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(children: [
+            Card(
+              child: ListTile(
+                  trailing: TextButton(
+                      onPressed: () {},
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Edit_Profile(),
+                              ));
+                        },
+                        child: Text(
+                          'EDIT',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.skyBlue),
+                        ),
+                      )),
+                  leading: CircleAvatar(
+                    backgroundImage:
+                    AssetImage('assets/images/connectWithImg.png'),
+                    radius: AppFontSize.font20,
+                  ),
+                  title: Text2.blue('John Isner')),
+            ),
+            buildCard("Notifications", 0),
+            buildCard("Change PassWord", 1),
+            buildCard("Contact Support", 2),
+            buildCard("Sign Out", 3),
+            Card(
+              child: Center(
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Delete_Account(),
+                          ));
+                    },
+                    child: Text(
+                      'Delete Account',
+                      style: TextStyle(color: Colors.red, fontSize: 16),
                     )),
-                leading: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/connectWithImg.png'),
-                  radius: AppFontSize.font20,
-                ),
-                title: Text2.blue('John Isner')),
-          ),
-          buildCard("Notifications", 0),
-          buildCard("Change PassWord", 1),
-          buildCard("Contact Support", 2),
-          buildCard("Sign Out", 3),
-          Card(
-            child: Center(
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Delete_Account(),
-                        ));
+              ),
+            ),
+            SizedBox(height: AppFontSize.font150),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return TermsConditionDialogBoxWidget(
+                          btn_Name: 'CLOSE',
+                        );
+                      },
+                    );
                   },
                   child: Text(
-                    'Delete Account',
-                    style: TextStyle(color: Colors.red, fontSize: 16),
-                  )),
-            ),
-          ),
-          SizedBox(height: AppFontSize.font150),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return TermsConditionDialogBoxWidget(
-                        btn_Name: 'CLOSE',
-                      );
-                    },
-                  );
-                },
-                child: Text(
-                  'Terms & Condition',
-                  style: TextStyle(
-                      color: AppColor.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppFontSize.font16),
+                    'Terms & Condition',
+                    style: TextStyle(
+                        color: AppColor.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: AppFontSize.font16),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: AppFontSize.font20,
-              ),
-              CircleAvatar(
-                radius: AppFontSize.font6,
-              ),
-              SizedBox(
-                width: AppFontSize.font20,
-              ),
-              InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return PrivacyPolicyDialogBoxWidget(btnName: 'CLOSE');
-                    },
-                  );
-                },
-                child: Text(
-                  'Privacy Policy',
-                  style: TextStyle(
-                      color: AppColor.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppFontSize.font16),
+                SizedBox(
+                  width: AppFontSize.font20,
                 ),
-              )
-            ],
-          )
-        ]),
-      ),
-    );
+                CircleAvatar(
+                  radius: AppFontSize.font6,
+                ),
+                SizedBox(
+                  width: AppFontSize.font20,
+                ),
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PrivacyPolicyDialogBoxWidget(btnName: 'CLOSE');
+                      },
+                    );
+                  },
+                  child: Text(
+                    'Privacy Policy',
+                    style: TextStyle(
+                        color: AppColor.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: AppFontSize.font16),
+                  ),
+                )
+              ],
+            )
+          ]),
+        ),
+      );
+    },);
+
   }
 
   Widget buildCard(text, index) {
@@ -174,6 +181,8 @@ class _SittingsState extends State<Sittings> {
                                   actions: [
                                     TextButton(
                                         onPressed: () {
+                                          LocalDataSaver.setUserLogin(false);
+
                                           AppMassage.buildShowSnackBar(context, 'Sign Out Successfully');
                                           Navigator.pushReplacement(
                                               context,

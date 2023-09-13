@@ -5,7 +5,10 @@ import 'package:playerconnect/dashboard/My_Profile/Setting/Sittings.dart';
 import 'package:playerconnect/shared/Button.dart';
 import 'package:playerconnect/shared/constant/appColors.dart';
 import 'package:playerconnect/shared/constant/font_sizes.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+
+import '../../provider_data/profile_provider.dart';
 
 class My_Profil extends StatefulWidget {
   const My_Profil({Key? key}) : super(key: key);
@@ -17,8 +20,10 @@ class My_Profil extends StatefulWidget {
 class _My_ProfilState extends State<My_Profil> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Consumer<ProviderProfile>(
+      builder: (context, provider, child) {
+        return SafeArea(
+            child: Scaffold(
           body: Stack(children: [
             Container(
               width: MediaQuery.of(context).size.width,
@@ -30,7 +35,9 @@ class _My_ProfilState extends State<My_Profil> {
                       height: MediaQuery.of(context).size.height / 1.7,
                       child: Image(
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/images/connectWithImg.png'))),
+                          image: NetworkImage(ApiUtils.imageApi +
+                              provider.userProfileModelBody!.images
+                                  .toString()))),
                 ],
               ),
             ),
@@ -62,21 +69,21 @@ class _My_ProfilState extends State<My_Profil> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.transparent,
-                              Colors.white10,
-                              Colors.white38,
-                              Colors.white70,
-                              Colors.white,
-                              Colors.white,
-                            ],
+                          Colors.transparent,
+                          Colors.white10,
+                          Colors.white38,
+                          Colors.white70,
+                          Colors.white,
+                          Colors.white,
+                        ],
                             stops: [
-                              0.01,
-                              0.02,
-                              0.05,
-                              0.1,
-                              0.15,
-                              0.3,
-                            ])),
+                          0.01,
+                          0.02,
+                          0.05,
+                          0.1,
+                          0.15,
+                          0.3,
+                        ])),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Column(
@@ -84,13 +91,12 @@ class _My_ProfilState extends State<My_Profil> {
                           children: [
                             Row(
                               children: [
-
                                 Text(
-                                  '11.7',
+                                  provider.userProfileModelBody!.rating
+                                      .toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize:
-                                    AppFontSize.font40,
+                                    fontSize: AppFontSize.font40,
                                   ),
                                 ),
                                 SizedBox(
@@ -99,25 +105,26 @@ class _My_ProfilState extends State<My_Profil> {
                                 RotatedBox(
                                     quarterTurns: 3,
                                     child: Text(
-                                      'UTR',
+                                      "${provider.userProfileModelBody!.ratingtype == 0 ? "UTR" : "NTRP"}",
                                       style: TextStyle(
-                                          fontSize: AppFontSize.font16, letterSpacing: AppFontSize.font4),
+                                          fontSize: AppFontSize.font16,
+                                          letterSpacing: AppFontSize.font4),
                                     )),
                                 SizedBox(
                                   width: AppFontSize.font10,
                                 ),
-                                Image.asset('assets/images/flagImg.png',
-                                    height: AppFontSize.font20),
+                                // Image.network( provider.userProfileModelBody!.countryFlag.toString(),
+                                //     height: AppFontSize.font20),
                                 SizedBox(
                                   width: AppFontSize.font10,
                                 ),
                               ],
                             ),
                             SizedBox(
-                              height:AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
                             Text(
-                              'Doris Edwards',
+                              "${provider.userProfileModelBody!.firstName}  ${provider.userProfileModelBody!.lastName}",
                               style: TextStyle(
                                   fontSize: AppFontSize.font35,
                                   fontWeight: FontWeight.bold,
@@ -126,9 +133,10 @@ class _My_ProfilState extends State<My_Profil> {
                             SizedBox(
                               height: AppFontSize.font20,
                             ),
-                            Text2.text2('New Lamont, DE'),
+                            Text2.text2(
+                                "${provider.userProfileModelBody!.city}, ${provider.userProfileModelBody!.country!.substring(0, 2).toUpperCase()}"),
                             SizedBox(
-                              height:AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,13 +150,17 @@ class _My_ProfilState extends State<My_Profil> {
                                     ),
                                     Text.rich(TextSpan(children: [
                                       TextSpan(
-                                          text: '21 ',
+                                          text: provider
+                                              .userProfileModelBody!.dob
+                                              .toString()
+                                              .split(" ")
+                                              .last,
                                           style: TextStyle(
                                               color: AppColor.black,
                                               fontSize: AppFontSize.font16,
                                               fontWeight: FontWeight.bold)),
                                       TextSpan(
-                                          text: 'Years ',
+                                          text: ' Years',
                                           style: TextStyle(
                                               color: AppColor.white1,
                                               fontSize: AppFontSize.font14,
@@ -162,20 +174,25 @@ class _My_ProfilState extends State<My_Profil> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-
                                     Text1.text1('Height'),
                                     SizedBox(
                                       height: AppFontSize.font20,
                                     ),
-                                    Text.rich(TextSpan(children: [
+                                    Text.rich(
+                                        TextSpan(children: [
                                       TextSpan(
-                                          text: "6'5''",
+                                          text: provider
+                                              .userProfileModelBody!.height
+                                              .toString()
+                                              .split(" ")
+                                              .first,
                                           style: TextStyle(
                                               color: AppColor.black,
                                               fontSize: AppFontSize.font16,
                                               fontWeight: FontWeight.bold)),
                                       TextSpan(
-                                          text: "(196cm)",
+                                          text:
+                                              "(${provider.userProfileModelBody!.height?.split("(").last}",
                                           style: TextStyle(
                                               color: AppColor.white1,
                                               fontSize: AppFontSize.font14,
@@ -193,13 +210,21 @@ class _My_ProfilState extends State<My_Profil> {
                                     SizedBox(
                                       height: AppFontSize.font20,
                                     ),
-                                    Text2.text2('Male'),
+                                    Text2.text2(
+                                        provider.userProfileModelBody!.gender ==
+                                                0
+                                            ? "Male"
+                                            : provider.userProfileModelBody!
+                                                        .gender ==
+                                                    1
+                                                ? "Female"
+                                                : "Other"),
                                   ],
                                 ),
                               ],
                             ),
                             SizedBox(
-                              height:AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
                             Row(
                               children: [
@@ -210,20 +235,20 @@ class _My_ProfilState extends State<My_Profil> {
                                     SizedBox(
                                       height: AppFontSize.font20,
                                     ),
-                                    Text2.text2('Counter Puncher'),
+                                    Text2.text2(provider.userProfileModelBody!.playingstyle.toString()),
                                   ],
                                 ),
                                 SizedBox(
-                                  width:  AppFontSize.font30,
+                                  width: AppFontSize.font30,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text1.text1('Dominant Hand'),
                                     SizedBox(
-                                      height:  AppFontSize.font20,
+                                      height: AppFontSize.font20,
                                     ),
-                                    Text2.text2('Right'),
+                                    Text2.text2(provider.userProfileModelBody!.dominnantHand==0?"Right":"Left"),
                                   ],
                                 ),
                               ],
@@ -239,89 +264,82 @@ class _My_ProfilState extends State<My_Profil> {
                                     AppColor.black,
                                     MediaQuery.of(context).size.width / 2.5)),
                             SizedBox(
-                              height:  AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
                             Text1.text1('About Tennis Experience'),
                             SizedBox(
-                              height:  AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
                             ReadMoreText(
-                              "Travelling the world is an exhilarating experience, but there are certain destinations where every traveller needs to be cautious due to the prevalence of crime, civil unrest, terrorism among other dangerous factors. If you're planning a foreign holiday, one of the most important things to check is whether the destination",
+                              provider.userProfileModelBody!.about.toString(),
                               trimLines: 3,
                               style: TextStyle(
-                                  fontSize:  AppFontSize.font16,
+                                  fontSize: AppFontSize.font16,
                                   color: AppColor.black),
                               trimMode: TrimMode.Line,
                               trimCollapsedText: 'Show more',
                               trimExpandedText: 'Show less',
                               lessStyle: TextStyle(
                                   color: AppColor.skyBlue,
-                                  fontSize:  AppFontSize.font16,
+                                  fontSize: AppFontSize.font16,
                                   fontWeight: FontWeight.bold),
                               moreStyle: TextStyle(
                                   color: AppColor.skyBlue,
-                                  fontSize:  AppFontSize.font16,
+                                  fontSize: AppFontSize.font16,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: AppFontSize.font20,
                             ),
-                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text1.text1('UTR Rating'),
-                                Text2.text2('11.3 UTR'),
-                              ],
-                            ),
-                            SizedBox(
-                              height:  AppFontSize.font20,
-                            ),Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text1.text1('NTRP Rating'),
-
-                                Text2.text2('5.0'),
+                                Text1.text1("${provider.userProfileModelBody!.ratingtype==0?"UTR Rating":"NTRP Rating"}"),
+                                Text2.text2(provider.userProfileModelBody!.rating),
                               ],
                             ),
                             SizedBox(
                               height: AppFontSize.font20,
-                            ),Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text1.text1('Preferred Distance from Count'),
-
-                                Text2.text2('15 miles'),
+                                Text2.text2(provider.userProfileModelBody!.locationRange.toString()+" "+"miles"),
                               ],
                             ),
                             SizedBox(
-                              height:  AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
-                            Text1.text1('You Festance form Court'),
+                            Text1.text1('You Disired Partner'),
                             SizedBox(
-                              height:  AppFontSize.font20,
+                              height: AppFontSize.font20,
                             ),
                             ReadMoreText(
-                              "Travelling the world is an exhilarating experience, but there are certain destinations where every traveller needs to be cautious due to the prevalence of crime, civil unrest, terrorism among other dangerous factors. If you're planning a foreign holiday, one of the most important things to check is whether the destination",
+                              provider.userProfileModelBody!.desiredPartner.toString(),
                               trimLines: 3,
                               style: TextStyle(
-                                  fontSize:  AppFontSize.font16,
+                                  fontSize: AppFontSize.font16,
                                   color: AppColor.black),
                               trimMode: TrimMode.Line,
                               trimCollapsedText: 'Show more',
                               trimExpandedText: 'Show less',
                               lessStyle: TextStyle(
                                   color: AppColor.skyBlue,
-                                  fontSize:  AppFontSize.font16,
+                                  fontSize: AppFontSize.font16,
                                   fontWeight: FontWeight.bold),
                               moreStyle: TextStyle(
                                   color: AppColor.skyBlue,
-                                  fontSize:  AppFontSize.font16,
+                                  fontSize: AppFontSize.font16,
                                   fontWeight: FontWeight.bold),
                             ),
-
-
                           ]),
                     ),
                   ),
                 ))
           ]),
-    ));
+        ));
+      },
+    );
   }
 }

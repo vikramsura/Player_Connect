@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:playerconnect/Login/Login.dart';
 import 'package:playerconnect/Sign_Up/SignUp.dart';
 import 'package:playerconnect/shared/Button.dart';
 import 'package:playerconnect/shared/constant/appColors.dart';
@@ -31,7 +32,7 @@ class _StartedState extends State<Started> {
       //   _currentPage = 0;
       // }
 
-      _currentPage<2?_currentPage++:_currentPage=0;
+      _currentPage < 2 ? _currentPage++ : _currentPage = 0;
 
       _pageController.animateToPage(
         _currentPage,
@@ -58,9 +59,19 @@ class _StartedState extends State<Started> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
+                SizedBox(
+                  height: AppFontSize.font40,
+                ),
+                Image.asset(
+                  'assets/images/splash.png',
+                  width: AppFontSize.font240,
+                ),
+                SizedBox(
+                  height: AppFontSize.font30,
+                ),
                 Container(
-                  height: MediaQuery.of(context).size.height/1.3,
-                  width:  AppFontSize.font300,
+                  height: MediaQuery.of(context).size.height / 1.8,
+                  width: AppFontSize.font300,
                   child: PageView(
                       controller: _pageController,
                       onPageChanged: (index) {
@@ -68,22 +79,18 @@ class _StartedState extends State<Started> {
                         setState(() {});
                       },
                       children: [
-                        Column(crossAxisAlignment: CrossAxisAlignment.center,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: AppFontSize.font20,
-                            ),
-                            Image.asset('assets/images/splash.png',width: AppFontSize.font240,),
-                            SizedBox(
-                              height: AppFontSize.font20,
-                            ),
                             Text(
                               'View Player Information',
                               style: TextStyle(
-                                  fontSize: AppFontSize.font18, fontWeight: FontWeight.bold),
+                                  fontSize: AppFontSize.font18,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Sed ut perspiciatis unfe omnis iste natus error sit voluptem accusantium doloremque lanudantium',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: AppFontSize.font14,
                               ),
@@ -96,46 +103,34 @@ class _StartedState extends State<Started> {
                         ),
                         Column(
                           children: [
-                            SizedBox(
-                              height: AppFontSize.font20,
-                            ),
-                            Image.asset('assets/images/splash.png',width: AppFontSize.font240,),
-                            SizedBox(
-                              height: AppFontSize.font20,
-                            ),
                             Text(
-                              'View Player Information',
+                              'Connect With Players Nearby',
                               style: TextStyle(
-                                  fontSize: AppFontSize.font18, fontWeight: FontWeight.bold),
+                                  fontSize: AppFontSize.font18,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Sed ut perspiciatis unfe omnis iste natus error sit voluptem accusantium doloremque lanudantium',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: AppFontSize.font14,
                               ),
                             ),
-                            SizedBox(
-                              height: AppFontSize.font20
-                            ),
+                            SizedBox(height: AppFontSize.font20),
                             Image.asset('assets/images/play2.png')
                           ],
                         ),
                         Column(
                           children: [
-                            SizedBox(
-                              height: AppFontSize.font20,
-                            ),
-                            Image.asset('assets/images/splash.png',width: AppFontSize.font240,),
-                            SizedBox(
-                              height: AppFontSize.font20,
-                            ),
                             Text(
-                              'View Player Information',
+                              'Chat with Players',
                               style: TextStyle(
-                                  fontSize: AppFontSize.font18, fontWeight: FontWeight.bold),
+                                  fontSize: AppFontSize.font18,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Sed ut perspiciatis unfe omnis iste natus error sit voluptem accusantium doloremque lanudantium',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: AppFontSize.font14,
                               ),
@@ -151,20 +146,26 @@ class _StartedState extends State<Started> {
                 SizedBox(
                   height: AppFontSize.font20,
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      decoration: BoxDecoration(color: _currentPage == 0 ? AppColor.skyBlue : AppColor.white1,
-                        borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(
+                          color: _currentPage == 0
+                              ? AppColor.skyBlue
+                              : AppColor.white1,
+                          borderRadius: BorderRadius.circular(8)),
                       height: 8,
                       width: _currentPage == 0 ? 32 : 8,
-
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     Container(
-                      decoration: BoxDecoration(color: _currentPage == 1 ? AppColor.skyBlue : AppColor.white1,
+                      decoration: BoxDecoration(
+                          color: _currentPage == 1
+                              ? AppColor.skyBlue
+                              : AppColor.white1,
                           borderRadius: BorderRadius.circular(8)),
                       height: 8,
                       width: _currentPage == 1 ? 32 : 8,
@@ -173,28 +174,34 @@ class _StartedState extends State<Started> {
                       width: 10,
                     ),
                     Container(
-                      decoration: BoxDecoration(color: _currentPage == 2 ? AppColor.skyBlue : AppColor.white1,
+                      decoration: BoxDecoration(
+                          color: _currentPage == 2
+                              ? AppColor.skyBlue
+                              : AppColor.white1,
                           borderRadius: BorderRadius.circular(8)),
                       height: 8,
                       width: _currentPage == 2 ? 32 : 8,
-
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: AppFontSize.font30,
+                  height: AppFontSize.font40,
                 ),
-                InkWell(onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignUp(),
-                      ));
-                },
-                  child: AppButton.appButton(context,'Get Started',AppColor.blue,AppColor.white,MediaQuery.of(context).size.width ,),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 20,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ));
+                  },
+                  child: AppButton.appButton(
+                    context,
+                    'Get Started',
+                    AppColor.blue,
+                    AppColor.white,
+                    MediaQuery.of(context).size.width,
+                  ),
                 ),
               ],
             ),

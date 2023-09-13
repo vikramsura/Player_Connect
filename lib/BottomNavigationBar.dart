@@ -4,7 +4,13 @@ import 'package:playerconnect/dashboard/Chat/Chat.dart';
 import 'package:playerconnect/dashboard/Connect_Request/Request.dart';
 import 'package:playerconnect/dashboard/My_Profile/My_Profile.dart';
 import 'package:playerconnect/dashboard/Players/Players.dart';
+import 'package:playerconnect/provider_data/chat_provider.dart';
+import 'package:playerconnect/provider_data/profile_provider.dart';
+import 'package:playerconnect/provider_data/provider_connect.dart';
+import 'package:playerconnect/provider_data/provider_players.dart';
+import 'package:playerconnect/provider_data/view_provider.dart';
 import 'package:playerconnect/shared/constant/appColors.dart';
+import 'package:provider/provider.dart';
 
 class Bottombar extends StatefulWidget {
   const Bottombar({
@@ -23,7 +29,17 @@ class _BottombarState extends State<Bottombar> {
     Request(),
     My_Profil(),
   ];
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<ProviderPlayers>(context, listen: false).getPlayer();
+    Provider.of<ProviderPlayers>(context, listen: false).recommendedPlayer(context);
+    Provider.of<ProviderChat>(context, listen: false).getChat();
+    Provider.of<ProviderConnect>(context, listen: false).getConnect();
+    Provider.of<ProviderConnect>(context, listen: false).getConnectionRequest();
+    Provider.of<ProviderProfile>(context, listen: false).getUserProfile();
+}
   @override
   Widget build(BuildContext context) {
     return SafeArea(

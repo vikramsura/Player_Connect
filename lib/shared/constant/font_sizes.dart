@@ -1,4 +1,3 @@
-double fontSize = 500;
 
 deviceHeight(fontSize) {
   AppFontSize.font4 = fontSize * 0.0055;
@@ -75,5 +74,5 @@ class AppFontSize {
   static double font240 = 240;
   static double font260 = 260;
   static double font300 = 300;
-  static double fontFull = fontSize;
+  static double fontFull = 0;
 }

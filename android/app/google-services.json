@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "543504519398",
+    "project_id": "playerconnect-e544e",
+    "storage_bucket": "playerconnect-e544e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543504519398:android:254f039c2b659508336b27",
+        "android_client_info": {
+          "package_name": "com.example.playerconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd6uoW0vPgIGsTQSBewpmTxLuU3i-O9IM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
