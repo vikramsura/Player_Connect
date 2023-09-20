@@ -5,11 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-import 'package:playerconnect/All_Data.dart';
-import 'package:playerconnect/BottomNavigationBar.dart';
-import 'package:playerconnect/Get_Started/get_started.dart';
-import 'package:playerconnect/Login/Login.dart';
+import 'package:playerconnect/shared/All_Data.dart';
+import 'package:playerconnect/shared/BottomNavigationBar.dart';
 import 'package:playerconnect/Model_Class/login_model.dart';
+import 'package:playerconnect/UI/Sign_Up/Thank_you.dart';
 import 'package:playerconnect/shared/SharedPreferences.dart';
 
 class ProviderLogin with ChangeNotifier {
@@ -17,8 +16,10 @@ class ProviderLogin with ChangeNotifier {
   TextEditingController passwordController = TextEditingController();
   bool isShowPassword = true;
   List<LoginBody> allData = [];
-
+bool isLoading=false;
   Future<List> getLogin(context) async {
+    isLoading=true;
+    notifyListeners();
     Uri myUri = Uri.parse(ApiUtils.loginApi);
     final response = await http.post(myUri, body: {
       "email": emailController.text,
@@ -62,10 +63,17 @@ class ProviderLogin with ChangeNotifier {
           MaterialPageRoute(
             builder: (context) => Bottombar(),
           ));
-    } else {
+      isLoading=false;
+      notifyListeners();
+    }
+    else {
       print("object");
       AppMassage.buildShowSnackBar(context, 'Something went wrong');
+      isLoading=false;
+      notifyListeners();
     }
+    isLoading=false;
+    notifyListeners();
     return [];
   }
 
@@ -111,7 +119,7 @@ class ProviderLogin with ChangeNotifier {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => Bottombar(),
+              builder: (context) => Thank_you(),
             ),
             (route) => false);
       }

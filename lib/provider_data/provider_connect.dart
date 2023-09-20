@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:playerconnect/All_Data.dart';
+import 'package:playerconnect/shared/All_Data.dart';
 import 'package:playerconnect/Model_Class/connection_model.dart';
 import 'package:playerconnect/Model_Class/modelConnect.dart';
 import 'package:http/http.dart' as http;

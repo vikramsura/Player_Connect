@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:playerconnect/All_Data.dart';
+import 'package:playerconnect/shared/All_Data.dart';
 import 'package:playerconnect/Model_Class/search_player_model.dart';
 import 'package:playerconnect/shared/SharedPreferences.dart';
 import 'package:provider/provider.dart';

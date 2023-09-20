@@ -1,4 +1,3 @@
-import 'package:playerconnect/Login/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDetails {

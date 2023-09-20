@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:playerconnect/All_Data.dart';
-import 'package:playerconnect/Login/Login.dart';
+import 'package:playerconnect/shared/All_Data.dart';
+import 'package:playerconnect/UI/Login/Login.dart';
 import 'package:playerconnect/shared/SharedPreferences.dart';
 
 

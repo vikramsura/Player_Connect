@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
-import 'package:playerconnect/All_Data.dart';
+import 'package:playerconnect/shared/All_Data.dart';
 import 'package:http/http.dart' as http;
-
-import '../Login/Login.dart';
-import '../shared/SharedPreferences.dart';
+import 'package:playerconnect/UI/Login/Login.dart';
+import 'package:playerconnect/shared/SharedPreferences.dart';
 
 class ProviderSetting with ChangeNotifier {
   TextEditingController oldPasswordController = TextEditingController();

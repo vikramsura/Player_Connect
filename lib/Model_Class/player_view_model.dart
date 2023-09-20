@@ -2,7 +2,7 @@ class PlayerViewModel {
   int? success;
   int? code;
   String? message;
-  PlayerViewModelBody? body;
+  List<PlayerViewBody>? body;
 
   PlayerViewModel({this.success, this.code, this.message, this.body});
 
@@ -10,7 +10,12 @@ class PlayerViewModel {
     success = json['success'];
     code = json['code'];
     message = json['message'];
-    body = json['body'] != null ? new PlayerViewModelBody.fromJson(json['body']) : null;
+    if (json['body'] != null) {
+      body = <PlayerViewBody>[];
+      json['body'].forEach((v) {
+        body!.add(new PlayerViewBody.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -19,13 +24,13 @@ class PlayerViewModel {
     data['code'] = this.code;
     data['message'] = this.message;
     if (this.body != null) {
-      data['body'] = this.body!.toJson();
+      data['body'] = this.body!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class PlayerViewModelBody {
+class PlayerViewBody {
   int? id;
   String? firstName;
   String? lastName;
@@ -33,19 +38,19 @@ class PlayerViewModelBody {
   String? phone;
   String? country;
   String? countryCode;
-  String? loginTime;
-  var latitude;
-  var longitude;
+  var loginTime;
+  Null? latitude;
   int? locationRange;
-  var otp;
+  Null? longitude;
+  Null? otp;
   String? images;
   int? gender;
   String? dob;
   String? password;
-  var deviceToken;
-  var deviceType;
+  Null? deviceToken;
+  Null? deviceType;
   int? role;
-  var totalexperience;
+  Null? totalexperience;
   String? height;
   String? about;
   String? city;
@@ -55,13 +60,14 @@ class PlayerViewModelBody {
   String? playingstyle;
   String? dominnantHand;
   String? countryFlag;
-  var socialType;
-  var socialId;
+  Null? socialType;
+  Null? socialId;
   int? isNotification;
   String? createdAt;
   String? updatedAt;
+  Null? requestStatus;
 
-  PlayerViewModelBody(
+  PlayerViewBody(
       {this.id,
         this.firstName,
         this.lastName,
@@ -71,8 +77,8 @@ class PlayerViewModelBody {
         this.countryCode,
         this.loginTime,
         this.latitude,
-        this.longitude,
         this.locationRange,
+        this.longitude,
         this.otp,
         this.images,
         this.gender,
@@ -95,9 +101,10 @@ class PlayerViewModelBody {
         this.socialId,
         this.isNotification,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.requestStatus});
 
-  PlayerViewModelBody.fromJson(Map<String, dynamic> json) {
+  PlayerViewBody.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
@@ -107,8 +114,8 @@ class PlayerViewModelBody {
     countryCode = json['country_code'];
     loginTime = json['loginTime'];
     latitude = json['latitude'];
-    longitude = json['longitude'];
     locationRange = json['location_range'];
+    longitude = json['longitude'];
     otp = json['otp'];
     images = json['images'];
     gender = json['gender'];
@@ -132,6 +139,7 @@ class PlayerViewModelBody {
     isNotification = json['isNotification'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    requestStatus = json['request_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -145,8 +153,8 @@ class PlayerViewModelBody {
     data['country_code'] = this.countryCode;
     data['loginTime'] = this.loginTime;
     data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
     data['location_range'] = this.locationRange;
+    data['longitude'] = this.longitude;
     data['otp'] = this.otp;
     data['images'] = this.images;
     data['gender'] = this.gender;
@@ -170,6 +178,8 @@ class PlayerViewModelBody {
     data['isNotification'] = this.isNotification;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    data['request_status'] = this.requestStatus;
     return data;
   }
 }
+

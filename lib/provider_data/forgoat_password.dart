@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:playerconnect/UI/Login/Login.dart';
 
-import '../All_Data.dart';
+import '../shared/All_Data.dart';
 import 'package:http/http.dart' as http;
 
-import '../Login/Login.dart';
 
 
 class ProviderForgoatPassword with ChangeNotifier{

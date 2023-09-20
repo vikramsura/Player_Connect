@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:playerconnect/All_Data.dart';
-import 'package:playerconnect/BottomNavigationBar.dart';
-import 'package:playerconnect/Get_Started/get_started.dart';
-import 'package:playerconnect/Sign_Up/Profile_step/Profile_step3.dart';
-import 'package:playerconnect/dashboard/Players/Players.dart';
+import 'package:playerconnect/UI/Get_Started/get_started.dart';
+import 'package:playerconnect/shared/BottomNavigationBar.dart';
 import 'package:playerconnect/provider_data/chat_provider.dart';
 import 'package:playerconnect/provider_data/delete_user_account.dart';
 import 'package:playerconnect/provider_data/forgoat_password.dart';
@@ -20,7 +17,7 @@ import 'package:provider/provider.dart';
 
 import 'shared/constant/font_sizes.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -63,9 +60,10 @@ class MyApp extends StatelessWidget {
                     create: (context) {
                       return ProviderPlayerView();
                     },
-                    child: ChangeNotifierProvider(create: (context) {
-                      return ProviderDeleteUserAccount();
-                    },
+                    child: ChangeNotifierProvider(
+                      create: (context) {
+                        return ProviderDeleteUserAccount();
+                      },
                       child: ChangeNotifierProvider(
                         create: (context) {
                           return ProviderForgoatPassword();
@@ -74,8 +72,8 @@ class MyApp extends StatelessWidget {
                           debugShowCheckedModeBanner: false,
                           title: 'Flutter Demo',
                           theme: ThemeData(
-                            colorScheme:
-                                ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                            colorScheme: ColorScheme.fromSeed(
+                                seedColor: Colors.deepPurple),
                             useMaterial3: true,
                           ),
                           home: const MyHomePage(),

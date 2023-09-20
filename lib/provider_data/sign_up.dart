@@ -8,8 +8,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:playerconnect/All_Data.dart';
-import 'package:playerconnect/Login/Login.dart';
+import 'package:playerconnect/shared/All_Data.dart';
+import 'package:playerconnect/UI/Login/Login.dart';
 import 'package:playerconnect/shared/constant/appColors.dart';
 import 'package:playerconnect/shared/constant/font_sizes.dart';
 
@@ -35,38 +35,41 @@ class ProviderSignUp with ChangeNotifier {
   TextEditingController playingController = TextEditingController();
   TextEditingController desiredController = TextEditingController();
   TextEditingController cityController = TextEditingController();
-  String countryNameController = "India";
-  String codeController = "+91";
+  String countryName = "India";
+  String code = "+91";
 
   Future setSignUpData(context) async {
     try {
       Uri myUri = Uri.parse(ApiUtils.singUpApi);
       final dataFrom = await http.MultipartRequest('POST', myUri);
+      dataFrom.files.add(await http.MultipartFile.fromPath("images", file!.path));
       dataFrom.fields.addAll({
         "first_name": firstController.text,
         "last_name": lastController.text.trim(),
         "email": emailController.text.trim(),
         "phone": phoneController.text.trim(),
         "dob": dateController.text.trim(),
-        "country": countryNameController.toString(),
-        "country_code": codeController.toString(),
-        "password": phoneController.text.trim(),
-        "role": 1.toString(),
-        "gender": gender.toString(),
-        "totalexperience": textController.text.trim(),
-        "height": feetController.text.trim(),
-        "rating": isUtr ? utrRating.toString() : ntrpRating.toString(),
+        "country": countryName.toString(),
+        "country_code": "$code",
+        "password": passwordController.text.trim(),
+        "role": "1",
+        "gender": "$gender",
+        // "totalexperience": textController.text.trim(),
+        "height": "${feetController.text} ${inchesController.text}",
+        "rating": isUtr ? utrRating.toStringAsFixed(0) : ntrpRating.toStringAsFixed(0),
         "city": cityController.text.trim(),
         "about": textController.text.trim(),
         "desired_partner": desiredController.text.trim(),
         "dominnant_hand": isdominant.toString(),
         "location_range": DrivingDistance.toString(),
-        "ratingtype": isUtr ? 0.toString() : 1.toString(),
+        "ratingtype": isUtr ? "0" : "1",
         "country_flag": DrivingDistance.toString(),
         "playingstyle": playingController.text.trim(),
-        "images": file!.path,
+
       });
       final response = await http.Response.fromStream(await dataFrom.send());
+
+      print("ggg${response.statusCode}");
       var data = jsonDecode(response.body);
       if (response.statusCode == 200) {
         Navigator.pushAndRemoveUntil(
@@ -166,8 +169,8 @@ class ProviderSignUp with ChangeNotifier {
   void showCountryPicker(context) async {
     final country = await showCountryPickerSheet(context);
     if (country != null) {
-      countryNameController = country.name.toString();
-      codeController = country.callingCode.toString();
+      countryName = country.name.toString();
+      code = country.callingCode.toString();
       countryFlag = country.flag.toString();
       notifyListeners();
     }
@@ -177,8 +180,8 @@ class ProviderSignUp with ChangeNotifier {
   void initCountry(context) async {
     final country = await getCountryByCountryCode(context, "IN");
     countryFlag = country?.flag.toString();
-    countryNameController = country!.name.toString();
-    codeController = country.callingCode.toString();
+    countryName = country!.name.toString();
+    code = country.callingCode.toString();
     notifyListeners();
   }
 

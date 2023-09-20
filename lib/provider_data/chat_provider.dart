@@ -7,9 +7,9 @@ import 'package:playerconnect/shared/constant/appColors.dart';
 import 'package:playerconnect/shared/constant/font_sizes.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter/material.dart';
-import 'package:playerconnect/All_Data.dart';
+import 'package:playerconnect/shared/All_Data.dart';
 import 'package:http/http.dart' as http;
-import 'package:playerconnect/BottomNavigationBar.dart';
+import 'package:playerconnect/shared/BottomNavigationBar.dart';
 import 'package:playerconnect/Model_Class/chat_model.dart';
 
 import '../Model_Class/chat_message_model.dart';
@@ -65,6 +65,10 @@ class ProviderChat with ChangeNotifier {
     });
   }
 
+ List aaa=[];
+  getDataaa(){
+    aaa=ProviderChat().getChat() as List;
+  }
 
 
   void handleAttachmentPressed(context) {
